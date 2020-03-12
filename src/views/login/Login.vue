@@ -63,9 +63,11 @@ export default {
         if (!e) return;
         // 提交表单
         this.loading = true
+        console.log(123)
         //发送登录请求
         login(this.form)
           .then(res => {
+            console.log(res)
             // 存储到vuex
             // 存储到本地存储
             this.$store.commit("login", res.data);

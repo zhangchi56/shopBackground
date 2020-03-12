@@ -44,7 +44,7 @@ export default function axios(option) {
     instance.interceptors.response.use(response => {
       console.log('响应拦截器 成功');
       // 隐藏loading
-      hideLoading()
+      // hideLoading()
       // 对响应数据做点什么
       return response;
     },(err)=> {

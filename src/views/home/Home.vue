@@ -1,6 +1,7 @@
 <template>
   <div class="">
-    home
+    home 
+    <span class="iconfont icon-baobiao"></span>
   </div>
 </template>
 
