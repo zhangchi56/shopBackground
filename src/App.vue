@@ -5,23 +5,19 @@
 </template>
 
 <script>
-
 export default {
   name: 'app',
   data() {
-    return {
-      
-    }
+    return {}
   },
 
   created() {
     // 初始化用户信息
     this.$store.commit('initUser')
-  },
+  }
 }
 </script>
 
 <style>
-@import "~@/assets/css/base.css";
-
+@import '~@/assets/css/base.css';
 </style>

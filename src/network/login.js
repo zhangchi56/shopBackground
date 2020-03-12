@@ -1,10 +1,10 @@
-import axios from './axios'
+import originAxios from './axios'
 
 export function login( params ) {
-  return axios({
-    baseURL: '/admin/login',
+  return originAxios({
+    url: '/login',
     method:'post',
-    params
+    data: params
   })
 }
 

@@ -15,7 +15,6 @@ Vue.prototype.$conf = $conf
 
 
 
-
 new Vue({
   router,
   store,

@@ -39,55 +39,59 @@
 </template>
 
 <script>
-import { login } from "network/login";
+import { login } from 'network/login'
 
 export default {
   data() {
     return {
       loading: false,
       form: {
-        username: "",
-        password: ""
+        username: '',
+        password: ''
       },
       rules: {
         username: [
-          { required: true, message: "请输入用户名", trigger: "blur" }
+          { required: true, message: '请输入用户名', trigger: 'blur' }
         ],
-        password: [{ required: true, message: "请输入密码", trigger: "blur" }]
+        password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
       }
-    };
+    }
   },
   methods: {
     submit() {
       this.$refs.ruleForm.validate(e => {
-        if (!e) return;
+        if (!e) return
         // 提交表单
         this.loading = true
-        console.log(123)
-        //发送登录请求
+        // 发送登录请求
         login(this.form)
           .then(res => {
-            console.log(res)
-            // 存储到vuex
-            // 存储到本地存储
-            this.$store.commit("login", res.data);
-            // 生成后台菜单
-            // this.$store.commit('createNavBar',res.data.data.tree)
-            // 成功提示
-            this.$message("登录成功");
-            this.loading = false;
-            // 跳转后台首页
-            console.log(this.$route.path)
-            this.$router.push("/home");
-            console.log("登录成功")
+            if (res.data.meta.status !== 200) {
+              this.$message.error(res.data.meta.msg)
+              this.loading = false
+              return
+            } else {
+              this.$message({
+                message: res.data.meta.msg,
+                type: 'success'
+              })
+              // 存储到vuex
+              // 存储到本地存储
+              this.$store.commit('login', res.data.data)
+
+              this.loading = false
+              // 跳转后台首页
+              this.$router.push('/home')
+              console.log(res.data.data)
+            }
           })
           .catch(err => {
-            this.loading = false;
-          });
-      });
+            this.loading = false
+          })
+      })
     }
   }
-};
+}
 </script>
 
 <style>

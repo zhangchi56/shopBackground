@@ -1,55 +1,51 @@
-import originAxios from 'axios'
+import axios from 'axios'
 import qs from 'qs'
 
-export default function axios(option) {
+import {
+  Message
+} from 'element-ui'
+
+export default function originAxios(option) {
   return new Promise((resolve, reject) => {
     // 1.创建axios的实例
-    const instance = originAxios.create({
-
-      baseURL: "http://106.54.54.237:8000/api/wh",
+    const instance = axios.create({
+      // baseURL: 'http://123.207.32.32:8000',
+      baseURL : "http://127.0.0.1:8888/api/private/v1",
+      // baseURL: "",
       timeout: 5000
     });
 
-    // 配置请求拦截
-    instance.interceptors.request.use(config => {
-      // console.log('来到了request拦截success中');
-      // 1.当发送网络请求时, 在页面中添加一个loading组件, 作为动画
-
-      // 2.某些请求要求用户必须登录, 判断用户是否有token, 如果没有token跳转到login页面
-
-      // 3.对请求的参数进行序列化(看服务器是否需要序列化)
-      // config.data = qs.stringify(config.data)
-      // console.log(config);
-
+    // 添加请求拦截器
+    instance.interceptors.request.use((config) => {
       // 添加header头的token
       let token = window.sessionStorage.getItem('token')
-      if(config.token === true){
+      if (config.token === true) {
         config.headers['token'] = token
       }
       // 显示loading
-      if(config.loading === true){
+      if (config.loading === true) {
         showLoading()
       }
       // 在发送请求之前做些什么
       return config;
-    }, (error)=> {
+    }, (error) => {
       // 隐藏loading
       hideLoading()
       // 对请求错误做些什么
       return Promise.reject(error);
     });
 
-
-    // 配置响应拦截
-    instance.interceptors.response.use(response => {
-      console.log('响应拦截器 成功');
+    // 添加响应拦截器
+    instance.interceptors.response.use((response) => {
+      console.log('进入成功响应拦截器');
       // 隐藏loading
       // hideLoading()
       // 对响应数据做点什么
       return response;
-    },(err)=> {
+    }, (err) => {
+      console.log('进入错误响应拦截器');
       // 全局错误提示
-      if(err.response && err.response.data && err.response.data.errorCode){
+      if (err.response && err.response.data && err.response.data.errorCode) {
         Message.error(err.response.data.msg)
       }
       // 隐藏loading
@@ -57,6 +53,7 @@ export default function axios(option) {
       // 对响应错误做点什么
       return Promise.reject(err);
     });
+
 
     // 2.传入对象进行网络请求
     instance(option).then(res => {

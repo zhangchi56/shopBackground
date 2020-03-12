@@ -6,12 +6,12 @@ module.exports = {
   	https: false, // https:{type:Boolean}
   	open: true, //配置自动启动浏览器
   	proxy: {
-  		'/admin': { //代理api
-  			target: 'http://ceshi3.dishait.cn/admin',//服务器api地址
+  		'/v1': { //代理api
+  			target: 'http://127.0.0.1:8888/api/private/v1/',//服务器api地址
   			ws: true,// proxy websockets
   			changeOrigin: true,//是否跨域
   			pathRewrite: { //重写路径
-  				'^/admin': ''
+  				// '^/v1': ''
   			}
   		}
   	}
