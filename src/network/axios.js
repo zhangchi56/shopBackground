@@ -11,21 +11,22 @@ export default function originAxios(option) {
     const instance = axios.create({
       // baseURL: 'http://123.207.32.32:8000',
       baseURL : "http://127.0.0.1:8888/api/private/v1",
-      // baseURL: "",
       timeout: 5000
     });
 
     // 添加请求拦截器
     instance.interceptors.request.use((config) => {
+      config.headers.Authorization = window.sessionStorage.getItem('token')
+      // console.log(window.sessionStorage.getItem('token'))
       // 添加header头的token
-      let token = window.sessionStorage.getItem('token')
-      if (config.token === true) {
-        config.headers['token'] = token
-      }
-      // 显示loading
-      if (config.loading === true) {
-        showLoading()
-      }
+      // let token = window.sessionStorage.getItem('token')
+      // if (config.token === true) {
+      //   config.headers['token'] = token
+      // }
+      // // 显示loading
+      // if (config.loading === true) {
+      //   showLoading()
+      // }
       // 在发送请求之前做些什么
       return config;
     }, (error) => {
